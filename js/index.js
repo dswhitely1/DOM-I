@@ -40,3 +40,29 @@ const siteContent = {
 // Example: Update the img src for the logo
 let logo = document.getElementById("logo-img");
 logo.setAttribute('src', siteContent["nav"]["img-src"])
+
+
+const navLinks = document.querySelectorAll("a");
+navLinks.forEach((element,i) => (element.textContent = Object.values(siteContent.nav)[i]));
+const ctaH1 = document.querySelector("h1");
+ctaH1.textContent = siteContent.cta.h1;
+const ctaButton = document.querySelector("button");
+ctaButton.textContent = siteContent.cta.button;
+const ctaImage = document.getElementById("cta-img");
+ctaImage.setAttribute('src', siteContent["cta"]["img-src"])
+const mainContent = Object.values(siteContent["main-content"]);
+const textContentH4 = document.querySelectorAll("h4");
+let h4Index = [0,2,5,7,9]
+
+textContentH4.forEach((element, i) => (element.textContent=mainContent[h4Index[i]]))
+textContentP = document.querySelectorAll("p");
+console.log(textContentP);
+h4Index = [1,3,6,8,10];
+h4Index.forEach((element, i)=> (textContentP[i].textContent = mainContent[element]))
+const middleImg = document.getElementById("middle-img");
+middleImg.setAttribute('src', mainContent[4])
+
+const contactContent = Object.values(siteContent.contact);
+const contactSection = document.querySelector(".contact");
+
+contactSection.forEach((element,i) => element.textContent = contactContent[i]);
