@@ -41,30 +41,49 @@ const siteContent = {
 		copyright : 'Copyright Great Idea! 2018',
 	},
 };
-
+const addElement = (elementType, elementText) => {
+	let newElement;
+	newElement = document.createElement(elementType);
+	newElement.textContent = elementText;
+	return newElement;
+};
 // Example: Update the img src for the logo
 let logo = document.getElementById('logo-img');
 logo.setAttribute('src', siteContent['nav']['img-src']);
-
-const navLinks = document.querySelectorAll('a');
-navLinks.forEach((element, i) => (element.textContent = Object.values(siteContent.nav)[i]));
-const ctaH1 = document.querySelector('h1');
-ctaH1.textContent = siteContent.cta.h1;
-const ctaButton = document.querySelector('button');
-ctaButton.textContent = siteContent.cta.button;
-const ctaImage = document.getElementById('cta-img');
-ctaImage.setAttribute('src', siteContent['cta']['img-src']);
-const mainContent = Object.values(siteContent['main-content']);
-const textContentH4 = document.querySelectorAll('h4');
-let h4Index = [ 0, 2, 5, 7, 9 ];
-
-textContentH4.forEach((element, i) => (element.textContent = mainContent[h4Index[i]]));
-textContentP = document.querySelectorAll('p');
-console.log(textContentP);
-h4Index = [ 1, 3, 6, 8, 10 ];
-h4Index.forEach((element, i) => (textContentP[i].textContent = mainContent[element]));
 const middleImg = document.getElementById('middle-img');
-middleImg.setAttribute('src', mainContent[4]);
+middleImg.setAttribute('src', siteContent['main-content']['middle-img-src']);
+
+const navigation = document.querySelector('nav');
+let navLinks = navigation.children;
+const navLinkContent = Object.values(siteContent.nav)
+	.filter(element => {
+		return !element.match(/(img)/i);
+	})
+	.forEach((element, i) => (navLinks[i].textContent = element));
+navigation.prepend(addElement(`a`, `Home`));
+navigation.appendChild(addElement(`a`, `Specials`));
+Array.from(navLinks).forEach(element => (element.style.color = 'green'));
+const ctaElements = document.querySelector('.cta-text').children;
+const ctaContent = Object.values(siteContent.cta)
+	.filter(element => {
+		return !element.match(/(img)/i);
+	})
+	.forEach((element, i) => (ctaElements[i].textContent = element));
+
+const ctaImage = document.getElementById('cta-img').setAttribute('src', siteContent['cta']['img-src']);
+const mainContentHeadings = document.querySelectorAll('.text-content h4');
+const textMainContentHeadings = Object.values(siteContent['main-content'])
+	.filter(element => {
+		return !element.match(/(img)/i) && !element.match(/\s/g);
+	})
+	.forEach((element, i) => (mainContentHeadings[i].textContent = element));
+
+const mainContentParagraphs = document.querySelectorAll('.text-content p');
+const textMainContentParagraphs = Object.values(siteContent['main-content'])
+	.filter(element => {
+		return element.match(/\s/g);
+	})
+	.forEach((element, i) => (mainContentParagraphs[i].textContent = element));
 
 const contactContent = Object.values(siteContent.contact);
 const contactSection = document.querySelector('.contact').children;
